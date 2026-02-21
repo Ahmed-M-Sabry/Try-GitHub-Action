@@ -1,30 +1,29 @@
-name: .Net CI Pipeline
+name: .NET 10 CI
 
 on:
- push:
-   branches: [master]
- pull_request:
-   branches: [master]
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
-      Build-and-Run:
-        runs-on: ubuntu-latest
-        steps:
-            - name: CheckOut Repository
-              uses: actions/checkout@v6
-              
-            - name: SetUp dotnet
-              uses: actions/setup-dotnet@v5
-              with:
-                dotnet-version: | 
-                  8.0.x
-                  9.0.x
-                cache: true
-              
-            - name: Project Restore
-              run: dotnet restore --use-lock-file
-              
-            - name: build Solution
-              run: dotnet build --no-restore --configuration Debug
-              
-            - name: Run all unit tests
-              run: dotnet test --no-build --configuration Debug --verbosity normal
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 10
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Debug 
+
+    - name: Run tests
+      run: dotnet test TryGitHubAction.slnx --no-build --verbosity normal --configuration Debug
