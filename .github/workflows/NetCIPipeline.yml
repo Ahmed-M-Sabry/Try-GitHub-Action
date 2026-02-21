@@ -1,0 +1,29 @@
+name: .Net CI Pipeline
+
+on:
+ push:
+   branches: [master]
+ pull_request:
+   branches: [master]
+jobs:
+      Build-and-Run:
+        runs-on: ubuntu-latest
+        steps:
+            - name: CheckOut Repository
+              uses: actions/checkout@v6
+              
+            - name: SetUp dotnet
+              uses: actions/setup-dotnet@v5
+              with:
+                dotnet-version: | 
+                  8.0.x
+                  9.0.x
+
+            - name: Project Restore
+              run: dotnet restore
+              
+            - name: build Solution
+              run: dotnet build --no-restore --configuration Debug
+              
+            - name: Run all unit tests
+              run: dotnet test --no-build --configuration Debug --verbosity normal
