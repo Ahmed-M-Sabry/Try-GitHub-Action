@@ -4,7 +4,7 @@
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello from .NET!");
+            Console.WriteLine("Hello from .NET Project!");
             int result = Add(5, 7);
             Console.WriteLine($"5 + 7 = {result}");
         }
