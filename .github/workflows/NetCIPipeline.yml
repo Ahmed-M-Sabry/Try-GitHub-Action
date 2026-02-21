@@ -18,9 +18,10 @@ jobs:
                 dotnet-version: | 
                   8.0.x
                   9.0.x
-
+                cache: true
+              
             - name: Project Restore
-              run: dotnet restore
+              run: dotnet restore --use-lock-file
               
             - name: build Solution
               run: dotnet build --no-restore --configuration Debug
